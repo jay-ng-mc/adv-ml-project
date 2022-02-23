@@ -1,6 +1,6 @@
 [submodule "maddpg"]
 	path = maddpg
-	url = https://github.com/openai/maddpg.git
+	url = https://github.com/jay-ng-mc/maddpg.git
 [submodule "multiagent-particle-envs"]
 	path = multiagent-particle-envs
-	url = https://github.com/openai/multiagent-particle-envs.git
+	url = https://github.com/jay-ng-mc/multiagent-particle-envs.git
