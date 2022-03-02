@@ -1,6 +1,7 @@
 import pickle
 from argparse import Namespace
 from experiments.train import train
+import tensorflow as tf
 
 def run_trial(scenario, episodes, train_params):
     # train_params is a dictionary containing lr, gamma, batch_size, and num_units as keys
@@ -62,6 +63,7 @@ def run_trial(scenario, episodes, train_params):
         benchmark_iters=100000,
         benchmark_dir='./benchmark_files'
     )
+    tf.reset_default_graph()
     train(args)
 
     if scenario == 'simple':
