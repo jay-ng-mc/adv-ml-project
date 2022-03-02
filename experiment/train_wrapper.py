@@ -80,4 +80,5 @@ def run_trial(scenario, episodes, train_params):
         return sum(reward_curve)/len(reward_curve) # compute mean
 
 # example run
-print(run_trial('simple_tag', 2000, {'lr':0.02, 'gamma':0.95, 'batch_size':1024, 'num_units':64}))
+if __name__ == '__main__':
+    print(run_trial('simple_tag', 2000, {'lr':0.02, 'gamma':0.95, 'batch_size':1024, 'num_units':64}))
