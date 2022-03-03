@@ -3,7 +3,7 @@ import numpy as np
 from random import random
 from math import log, ceil
 from time import time, ctime
-import pickle
+import pickle, os
 
 
 from hyperopt import hp
@@ -16,7 +16,8 @@ from train_wrapper import run_trial
 space = {
     'lr': hp.choice( 'lr', [1e-4, 1e-3, 1e-2]), 
     'gamma': hp.choice('gamma', [0.9, 0.95, 0.99]),
-    'batch_size': hp.choice('batch_size', [32, 64, 128, 256, 512, 1024]),
+	'batch_size': hp.choice('batch_size', [32, 64]),
+    # 'batch_size': hp.choice('batch_size', [32, 64, 128, 256, 512, 1024]),
     'num_units': hp.choice( 'num_units', [32,64,128])
 }
 
@@ -43,7 +44,7 @@ class Hyperband:
 		
 		self.max_iter = max_iter  	# maximum iterations per configuration
 		self.eta = 3			# defines configuration downsampling rate (default = 3)
-		self.n_episode_per_iter = 1000
+		self.n_episode_per_iter = 100
 
 		self.logeta = lambda x: log( x ) / log( self.eta )
 		self.s_max = int( self.logeta( self.max_iter ))
@@ -136,5 +137,16 @@ if __name__ == '__main__':
 	results, T = hb.run(scenario)
 	print(results)
 	print(T)
+	# save stats for each combination of params run by hyperband
 	with open('./{}_hyperband_results.pkl'.format(scenario), 'wb') as f:
 		pickle.dump(results, f)
+
+	# save error curves
+	x_list = []
+	for filename in os.listdir('./learning_curves/'):
+		with open('./learning_curves/'+filename, 'rb') as f:
+			x=pickle.load(f)
+			x_list.append(x)
+	print(x_list)
+	with open('./{}_hyperband_loss_curves.pkl'.format(scenario), 'wb') as f:
+		pickle.dump(x_list, f)
