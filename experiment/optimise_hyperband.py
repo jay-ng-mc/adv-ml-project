@@ -3,6 +3,7 @@ import numpy as np
 from random import random
 from math import log, ceil
 from time import time, ctime
+import pickle
 
 
 from hyperopt import hp
@@ -13,10 +14,10 @@ from train_wrapper import run_trial
 # loguniform(loglow, loghigh)
 # loglow and loghigh written like this- log(x) to show what's the actual range of x
 space = {
-    'lr': hp.loguniform( 'lr', log(1e-4), log(1e-1)), 
-    'gamma': 1-hp.loguniform( 'discount', log(1e-5), log(1)),
-    'batch_size': hp.qloguniform( 'batch_size', log(32), log(2048), 16),
-    'num_units': hp.qloguniform( 'num_units', log(32), log(128), 16 )
+    'lr': hp.choice( 'lr', [1e-4, 1e-3, 1e-2]), 
+    'gamma': hp.choice('gamma', [0.9, 0.95, 0.99]),
+    'batch_size': hp.choice('batch_size', [32, 64, 128, 256, 512, 1024]),
+    'num_units': hp.choice( 'num_units', [32,64,128])
 }
 
 def get_params():
@@ -26,12 +27,12 @@ def get_params():
     #"num-units", type=int, default=64, help="number of units in the mlp")
 
 	params = sample( space )
-	# round floats, need to do this because qloguniform has rounding errors with small numbers
-	params['lr']=round(params['lr'], 5)
-	params['gamma']=round(params['gamma'], 5)
-	# enforce integers
-	params['batch_size']=ceil(params['batch_size'])
-	params['num_units']=ceil(params['num_units'])
+	# # round floats, need to do this because qloguniform has rounding errors with small numbers
+	# params['lr']=round(params['lr'], 4)
+	# params['gamma']=round(params['gamma'], 5)
+	# # enforce integers
+	# params['batch_size']=ceil(params['batch_size'])
+	# params['num_units']=ceil(params['num_units'])
 	return params
 
 
@@ -129,5 +130,8 @@ class Hyperband:
 		
 		return self.results
 
-hb = Hyperband(get_params, max_iter=1000)
+hb = Hyperband(get_params, max_iter=32)
 results = hb.run('simple_tag')
+print(results)
+with open('./hyperband_results.pkl', 'wb') as f:
+	pickle.dump(results, f)
