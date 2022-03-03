@@ -3,7 +3,7 @@ from argparse import Namespace
 from experiments.train import train
 import tensorflow as tf
 
-def run_trial(scenario, episodes, train_params):
+def run_trial(scenario, iterations, episodes, train_params):
     # train_params is a dictionary containing lr, gamma, batch_size, and num_units as keys
     # args is a Namespace object containing arguments as attributes as described below
 
@@ -46,7 +46,7 @@ def run_trial(scenario, episodes, train_params):
         # custom arguments
         scenario=scenario,
         num_adversaries=0,
-        num_episodes=episodes,
+        num_episodes=iterations*episodes,
         exp_name=experiment_name,
         save_dir='./experiment/saved_models/{}'.format(experiment_name),
         save_rate=episodes, # save once for each trial, saves overhead

@@ -43,7 +43,7 @@ class Hyperband:
 		
 		self.max_iter = max_iter  	# maximum iterations per configuration
 		self.eta = 3			# defines configuration downsampling rate (default = 3)
-		self.n_episode_per_iter = 100
+		self.n_episode_per_iter = 1000
 
 		self.logeta = lambda x: log( x ) / log( self.eta )
 		self.s_max = int( self.logeta( self.max_iter ))
@@ -94,8 +94,8 @@ class Hyperband:
 					if dry_run:
 						result = { 'loss': random(), 'log_loss': random(), 'auc': random()}
 					else:
-						reward = run_trial(scenario, n_iterations*self.n_episode_per_iter, t)
-						result = {'loss':-reward, 'log_loss':0}
+						reward = run_trial(scenario, n_iterations, self.n_episode_per_iter, t)
+						result = {'loss':-reward, 'log_loss':log(-reward)}
 						
 					assert( type( result ) == dict )
 					assert( 'loss' in result )
@@ -128,10 +128,13 @@ class Hyperband:
 				T = [ T[i] for i in indices if not early_stops[i]]
 				T = T[ 0:int( n_configs / self.eta )]
 		
-		return self.results
+		return self.results, T
 
-hb = Hyperband(get_params, max_iter=32)
-results = hb.run('simple_tag')
-print(results)
-with open('./hyperband_results.pkl', 'wb') as f:
-	pickle.dump(results, f)
+if __name__ == '__main__':
+	scenario = 'simple_speaker_listener'
+	hb = Hyperband(get_params, max_iter=81)
+	results, T = hb.run(scenario)
+	print(results)
+	print(T)
+	with open('./{}_hyperband_results.pkl'.format(scenario), 'wb') as f:
+		pickle.dump(results, f)
