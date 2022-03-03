@@ -66,20 +66,24 @@ def run_trial(scenario, episodes, train_params):
     tf.reset_default_graph()
     train(args)
 
-    if scenario == 'simple':
-        # there is only one agent
-        with open(plots_dir+experiment_name+'_rewards.pkl', 'rb') as f:
+    # if scenario == 'simple':
+    #     # there is only one agent
+    #     with open(plots_dir+experiment_name+'_rewards.pkl', 'rb') as f:
+    #         reward_curve=pickle.load(f)
+        
+    #     return reward_curve[-1]
+    # else:
+    #     # there are multiple agents
+    #     with open(plots_dir+experiment_name+'_agrewards.pkl', 'rb') as f:
+    #         reward_curve=pickle.load(f)
+        
+    #     # IMPORTANT: this only works when num_episodes=save_rate since data is only saved once and thus 
+    #     # there is only one reward value for each agent in the reward_curve
+    #     return sum(reward_curve)/len(reward_curve) # compute mean
+    with open(plots_dir+experiment_name+'_rewards.pkl', 'rb') as f:
             reward_curve=pickle.load(f)
         
-        return reward_curve[-1]
-    else:
-        # there are multiple agents
-        with open(plots_dir+experiment_name+'_agrewards.pkl', 'rb') as f:
-            reward_curve=pickle.load(f)
-        
-        # IMPORTANT: this only works when num_episodes=save_rate since data is only saved once and thus 
-        # there is only one reward value for each agent in the reward_curve
-        return sum(reward_curve)/len(reward_curve) # compute mean
+    return reward_curve[-1]
 
 # example run
 if __name__ == '__main__':
