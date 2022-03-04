@@ -16,8 +16,7 @@ from train_wrapper import run_trial
 space = {
     'lr': hp.choice( 'lr', [1e-4, 1e-3, 1e-2]), 
     'gamma': hp.choice('gamma', [0.9, 0.95, 0.99]),
-	'batch_size': hp.choice('batch_size', [32, 64]),
-    # 'batch_size': hp.choice('batch_size', [32, 64, 128, 256, 512, 1024]),
+    'batch_size': hp.choice('batch_size', [256, 512, 1024]),
     'num_units': hp.choice( 'num_units', [32,64,128])
 }
 
@@ -44,7 +43,7 @@ class Hyperband:
 		
 		self.max_iter = max_iter  	# maximum iterations per configuration
 		self.eta = 3			# defines configuration downsampling rate (default = 3)
-		self.n_episode_per_iter = 100
+		self.n_episode_per_iter = 1024
 
 		self.logeta = lambda x: log( x ) / log( self.eta )
 		self.s_max = int( self.logeta( self.max_iter ))
