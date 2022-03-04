@@ -57,7 +57,7 @@ def run_trial(scenario, iterations, episodes, train_params):
         good_policy='maddpg',
         adv_policy='maddpg',
         load_dir='',
-        restore=False,
+        restore=True,
         display=False,
         benchmark=False,
         benchmark_iters=100000,
