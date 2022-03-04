@@ -14,7 +14,7 @@ hyperopt==0.2.7
 idna==2.10
 importlib-metadata==4.8.3
 importlib-resources==5.4.0
--e git+https://github.com/jay-ng-mc/maddpg@2afa0368a10579cb87c4748e8a74b8a070d7ce62#egg=maddpg
+-e git+https://github.com/jay-ng-mc/maddpg.git@e3c28f55d1307367289b7462f0f004bb5179f248#egg=maddpg
 Markdown==3.2.2
 -e git+https://github.com/openai/multiagent-particle-envs.git@5405cc26f6d5698e224f8029351280b1d388ac0b#egg=multiagent
 networkx==2.5.1
