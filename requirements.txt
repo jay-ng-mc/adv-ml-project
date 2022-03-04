@@ -3,26 +3,35 @@ astor==0.8.1
 bleach==1.5.0
 certifi==2021.10.8
 chardet==4.0.0
+cloudpickle==2.0.0
+decorator==4.4.2
 future==0.18.2
 gast==0.5.3
 grpcio==1.40.0
 gym==0.10.5
 html5lib==0.9999999
+hyperopt==0.2.7
 idna==2.10
-importlib-metadata==2.1.3
--e git+https://github.com/openai/maddpg.git@3ceefa0ada3ff31d633dd0bde8ff95213ce99be3#egg=maddpg
+importlib-metadata==4.8.3
+importlib-resources==5.4.0
+-e git+https://github.com/jay-ng-mc/maddpg.git@e3c28f55d1307367289b7462f0f004bb5179f248#egg=maddpg
 Markdown==3.2.2
 -e git+https://github.com/openai/multiagent-particle-envs.git@5405cc26f6d5698e224f8029351280b1d388ac0b#egg=multiagent
-numpy==1.14.5
+networkx==2.5.1
+numpy==1.19.5
 numpy-stl==2.16.3
 protobuf==3.19.4
+py4j==0.10.9.3
 pyglet==1.4.11
 python-utils==2.7.1
 requests==2.25.1
+scipy==1.5.4
 six==1.16.0
 tensorboard==1.8.0
 tensorflow==1.8.0
 termcolor==1.1.0
+tqdm==4.63.0
+typing_extensions==4.1.1
 urllib3==1.26.8
 Werkzeug==1.0.1
-zipp==1.2.0
+zipp==3.6.0
